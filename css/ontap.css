@@ -1,0 +1,500 @@
+/* ========== RESET & GLOBAL ========== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-light: #818cf8;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981;
+    --bg-light: #f1f5f9;
+    --text-dark: #1e293b;
+    --text-gray: #64748b;
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+}
+
+/* ========== HEADER ========== */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.content-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+.header-stats .stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+.stat-badge i {
+    color: var(--warning);
+}
+
+/* ========== DECK LIST ========== */
+.decks-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+.deck-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s;
+    cursor: default;
+}
+.deck-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+.deck-item.cram-warning {
+    border-left: 4px solid var(--danger);
+    background: #fef2f2;
+}
+.deck-icon {
+    font-size: 32px;
+    width: 48px;
+    text-align: center;
+}
+.deck-info {
+    flex: 1;
+}
+.deck-name {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--text-dark);
+}
+.deck-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--text-gray);
+}
+.deck-meta i {
+    margin-right: 4px;
+}
+.due-badge {
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    background: var(--bg-light);
+}
+.due-badge.overdue {
+    background: #fee2e2;
+    color: var(--danger);
+}
+.due-badge.soon {
+    background: #fef3c7;
+    color: var(--warning);
+}
+.btn-study {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 20px;
+}
+
+/* ========== EMPTY STATE ========== */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+}
+.empty-state i {
+    font-size: 64px;
+    color: var(--success);
+    margin-bottom: 20px;
+}
+.empty-state h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+.empty-state p {
+    color: var(--text-gray);
+    margin-bottom: 24px;
+}
+
+/* ========== STUDY CONTAINER ========== */
+.study-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* ========== CRAM BANNER (RED ZONE) ========== */
+.cram-banner {
+    display: none;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+    color: #991b1b;
+    flex-wrap: wrap;
+}
+.cram-icon {
+    font-size: 28px;
+    color: var(--danger);
+}
+.cram-info {
+    flex: 1;
+}
+.cram-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+.cram-info p {
+    font-size: 14px;
+    margin: 0;
+}
+.cram-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.cram-stats i {
+    margin-right: 4px;
+}
+
+/* ========== PROGRESS ========== */
+.study-progress {
+    margin-bottom: 24px;
+}
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+}
+.progress-label {
+    color: var(--text-gray);
+}
+.progress-text {
+    color: var(--text-dark);
+}
+.progress-bar {
+    height: 8px;
+    background: var(--bg-light);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-light), var(--primary));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+/* ========== FLASHCARD ========== */
+.flashcard-wrapper {
+    cursor: pointer;
+    margin-bottom: 24px;
+}
+.flashcard {
+    perspective: 1000px;
+    height: 420px;
+}
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+}
+.flashcard-inner.flipped {
+    transform: rotateY(180deg);
+}
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-shadow: var(--shadow-lg);
+}
+.flashcard-front {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+}
+.flashcard-back {
+    background: var(--white);
+    border: 2px solid var(--primary);
+    transform: rotateY(180deg);
+    color: var(--text-dark);
+}
+.card-content {
+    text-align: center;
+    width: 100%;
+}
+.card-label {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    margin-bottom: 16px;
+}
+.flashcard-front .card-label {
+    opacity: 0.8;
+}
+.card-text {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    word-break: break-word;
+}
+.card-hint {
+    font-size: 13px;
+    opacity: 0.6;
+}
+.flashcard-front .card-hint {
+    color: rgba(255,255,255,0.7);
+}
+.flashcard-back .card-hint {
+    color: var(--text-gray);
+}
+
+/* ========== STUDY CONTROLS ========== */
+.study-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.control-center {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-gray);
+}
+.card-counter {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+.divider {
+    color: var(--border);
+}
+
+/* ========== RATING ========== */
+.rating-section {
+    text-align: center;
+    padding: 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+.rating-label {
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-bottom: 16px;
+}
+.rating-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+.rating-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-size: 14px;
+}
+.rating-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+.rating-btn i {
+    font-size: 24px;
+}
+.rating-btn.hard {
+    border-color: #fca5a5;
+}
+.rating-btn.hard:hover {
+    border-color: var(--danger);
+    background: rgba(239,68,68,0.05);
+}
+.rating-btn.hard i {
+    color: var(--danger);
+}
+.rating-btn.medium {
+    border-color: #fcd34d;
+}
+.rating-btn.medium:hover {
+    border-color: var(--warning);
+    background: rgba(245,158,11,0.05);
+}
+.rating-btn.medium i {
+    color: var(--warning);
+}
+.rating-btn.easy {
+    border-color: #6ee7b7;
+}
+.rating-btn.easy:hover {
+    border-color: var(--success);
+    background: rgba(16,185,129,0.05);
+}
+.rating-btn.easy i {
+    color: var(--success);
+}
+.rating-btn.very-easy {
+    border-color: #93c5fd;
+}
+.rating-btn.very-easy:hover {
+    border-color: #3b82f6;
+    background: rgba(59,130,246,0.05);
+}
+.rating-btn.very-easy i {
+    color: #3b82f6;
+}
+
+/* ========== TOAST ========== */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--text-dark);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow-lg);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.toast i {
+    font-size: 20px;
+}
+.toast.success i {
+    color: var(--success);
+}
+.toast.warning i {
+    color: var(--warning);
+}
+.toast.error i {
+    color: var(--danger);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .flashcard {
+        height: 320px;
+    }
+    .card-text {
+        font-size: 22px;
+    }
+    .study-controls {
+        justify-content: center;
+    }
+    .control-center {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+    .rating-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cram-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cram-stats {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .flashcard {
+        height: 260px;
+    }
+    .flashcard-front,
+    .flashcard-back {
+        padding: 24px;
+    }
+    .card-text {
+        font-size: 18px;
+    }
+    .deck-item {
+        flex-wrap: wrap;
+    }
+    .deck-info {
+        width: 100%;
+        order: 2;
+    }
+    .btn-study {
+        margin-left: auto;
+        order: 3;
+    }
+}

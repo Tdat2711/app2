@@ -1,0 +1,303 @@
+/* ===== TỔNG QUAN ===== */
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-light: #818cf8;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981;
+    --bg-light: #f1f5f9;
+    --text-dark: #1e293b;
+    --text-gray: #64748b;
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+}
+
+/* ===== HEADER ===== */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.content-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+.content-header h1 i {
+    margin-right: 8px;
+}
+.text-muted {
+    color: var(--text-gray);
+    margin-top: 4px;
+}
+
+/* ===== PERIOD SELECTOR ===== */
+.period-selector {
+    display: flex;
+    gap: 6px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+}
+.period-btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-gray);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.period-btn:hover {
+    color: var(--text-dark);
+}
+.period-btn.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* ===== STATS GRID ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+}
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s;
+}
+.stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    font-size: 22px;
+}
+.stat-card.orange .stat-icon {
+    background: rgba(245,158,11,0.1);
+    color: var(--warning);
+}
+.stat-card.blue .stat-icon {
+    background: rgba(59,130,246,0.1);
+    color: #3b82f6;
+}
+.stat-card.green .stat-icon {
+    background: rgba(16,185,129,0.1);
+    color: var(--success);
+}
+.stat-card.purple .stat-icon {
+    background: rgba(79,70,229,0.1);
+    color: var(--primary);
+}
+.stat-content {
+    flex: 1;
+}
+.stat-label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-gray);
+    margin-bottom: 2px;
+}
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+.stat-unit {
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-left: 4px;
+}
+
+/* ===== CHARTS ===== */
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+.chart-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+.chart-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+.chart-card h3 i {
+    margin-right: 8px;
+    color: var(--primary);
+}
+.chart-container {
+    position: relative;
+    height: 240px;
+    padding: 4px 0;
+}
+
+/* ===== DECK PERFORMANCE ===== */
+.deck-performance {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+.deck-performance h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+.deck-performance h3 i {
+    margin-right: 8px;
+    color: var(--primary);
+}
+.deck-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.deck-perf-item {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr 1fr;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-light);
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+}
+.deck-perf-item:hover {
+    background: var(--border);
+}
+.deck-perf-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+.deck-perf-name .icon {
+    font-size: 20px;
+}
+.deck-perf-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.deck-perf-progress .bar {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-light);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.deck-perf-progress .fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s;
+}
+.deck-perf-progress .fill.high {
+    background: var(--success);
+}
+.deck-perf-progress .fill.medium {
+    background: var(--warning);
+}
+.deck-perf-progress .fill.low {
+    background: var(--danger);
+}
+.deck-perf-stats {
+    text-align: center;
+}
+.deck-perf-stats .number {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+.deck-perf-stats .label {
+    font-size: 11px;
+    color: var(--text-gray);
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state-mini {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-gray);
+}
+.empty-state-mini i {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 12px;
+    color: var(--border);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .charts-row {
+        grid-template-columns: 1fr;
+    }
+    .deck-perf-item {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+}
+@media (max-width: 768px) {
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .period-selector {
+        align-self: flex-start;
+    }
+    .deck-perf-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+        text-align: center;
+    }
+    .deck-perf-name {
+        justify-content: center;
+    }
+    .stat-value {
+        font-size: 22px;
+    }
+    .stat-card {
+        padding: 16px;
+    }
+}
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

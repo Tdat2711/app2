@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kho Thẻ Học Tập - ForgetMeNot</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/khothe.css">
+
+    <style>
+        /* CSS bổ sung cho Modal CRUD Thẻ bên trong Kho thẻ */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal.open { display: flex; animation: fadeIn 0.2s ease; }
+        .modal-content { background: #fff; width: 100%; max-width: 800px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; max-height: 85vh; }
+        .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+        .modal-footer { padding: 12px 20px; border-top: 1px solid var(--border-light); display: flex; justify-content: flex-end; gap: 10px; }
+        .flashcard-crud-item { display: flex; gap: 12px; background: var(--bg-light); padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-light); align-items: center; }
+        .flashcard-crud-item input, .flashcard-crud-item textarea { flex: 1; border: 1px solid var(--border); padding: 8px; border-radius: 6px; font-family: inherit; font-size: 14px; background: #fff; }
+        .close-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-gray); }
+        .close-btn:hover { color: var(--danger); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "./js/": "../js/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+    <div class="logo">
+        <i class="fas fa-brain"></i>
+        <span>ForgetMeNot</span>
+    </div>
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+                <a href="khothe.html" class="nav-item active"><i class="fas fa-layer-group"></i><span>Kho thẻ</span></a>
+                <a href="taothe.html" class="nav-item">
+    <i class="fas fa-plus-circle"></i>
+    <span>Tạo bộ thẻ</span>
+</a>
+                <a href="ontap.html" class="nav-item"><i class="fas fa-book-open-reader"></i><span>Ôn tập</span></a>
+                <a href="thongke.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Thống kê</span></a>
+                <a href="congdong.html" class="nav-item"><i class="fas fa-users"></i><span>Cộng đồng</span></a>
+                <a href="caidat.html" class="nav-item"><i class="fas fa-cog"></i><span>Cài đặt</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info" id="userInfo">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName"></div>
+                        <div class="user-email" id="userEmail"></div>
+                    </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div>
+                    <h1><i class="fas fa-layer-group text-primary"></i> Kho Thẻ Của Tôi</h1>
+                    <p class="text-muted">Quản lý, chỉnh sửa và theo dõi tiến độ các bộ thẻ tri thức của bạn.</p>
+                </div>
+                <div class="header-actions">
+                    <a href="taothe.html" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Thiết kế bộ thẻ mới
+                    </a>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <div class="filter-tabs">
+                    <button class="filter-btn active" data-filter="all">Tất cả</button>
+                    <button class="filter-btn" data-filter="starred"><i class="fas fa-star text-warning"></i> Bộ thẻ yêu thích</button>
+                    <button class="filter-btn" data-filter="tech">Bộ Thẻ AI</button>
+                </div>
+                
+                <div class="d-flex gap-1 style-search-group">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm bộ thẻ theo tên..." class="btn-outline" style="padding: 8px 16px; border-radius: 20px; width: 250px;" />
+                    <select id="sortSelect" class="btn-outline" style="padding: 8px 12px; border-radius: 20px;">
+                        <option value="name">Sắp xếp theo: Tên A-Z</option>
+                        <option value="newest">Sắp xếp theo: Mới nhất</option>
+                        <option value="cardCount">Sắp xếp theo: Số lượng thẻ</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="decksGrid" class="grid-3"></div>
+
+            <div id="emptyState" class="empty-state" style="display: none; text-align: center; padding: 60px 20px;">
+                <i class="fas fa-folder-open text-light" style="font-size: 64px; margin-bottom: 16px;"></i>
+                <h3>Kho dữ liệu chưa có bộ thẻ</h3>
+                <p>Hãy tiến hành thiết kế bộ thẻ thủ công hoặc quét file tài liệu bằng AI để bắt đầu học.</p>
+                <a href="taothe.html" class="btn btn-primary mt-1"><i class="fas fa-magic"></i> Tạo bộ thẻ ngay</a>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL XEM CHI TIẾT VÀ QUẢN LÝ CRUD FLASHCARDS -->
+    <div class="modal" id="viewFlashcardsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalDeckTitle" class="text-dark" style="font-weight: 700;"><i class="fas fa-folder-open text-warning mr-1"></i> Chi tiết bộ thẻ</h3>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-between align-center mb-2">
+                    <h4 class="text-dark" style="font-size: 15px; font-weight: 600;">Danh sách các thẻ học:</h4>
+                    <button class="btn btn-success btn-sm" id="modalAddCardBtn"><i class="fas fa-plus"></i> Thêm thẻ mới</button>
+                </div>
+                <div id="modalFlashcardsContainer">
+                    <!-- JS render danh sách thẻ kèm input chỉnh sửa trực tiếp tại đây -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="modalCancelBtn">Đóng</button>
+                <button class="btn btn-primary" id="modalSaveAllBtn"><i class="fas fa-save"></i> Lưu mọi thay đổi</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Thông báo</span>
+    </div>
+
+    <script src="../js/db.js"></script>
+    <script src="../js/db-seed.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/auth.js"></script>
+    <script type="module" src="../js/khothe.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

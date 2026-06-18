@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tạo thẻ bằng AI - ForgetMeNot</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/taothe.css" />
+
+    <script type="importmap">
+        { "imports": { "./js/": "../js/" } }
+    </script>
+    <script type="module" src="../js/app.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo"><i class="fas fa-brain"></i><span>ForgetMeNot</span></div>
+                <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+                <a href="khothe.html" class="nav-item"><i class="fas fa-layer-group"></i><span>Kho thẻ</span></a>
+                <a href="taothe.html" class="nav-item active"><i class="fas fa-plus-circle"></i><span>Tạo thẻ</span></a>
+                <a href="ontap.html" class="nav-item"><i class="fas fa-book-open-reader"></i><span>Ôn tập</span></a>
+                <a href="thongke.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Thống kê</span></a>
+                <a href="congdong.html" class="nav-item"><i class="fas fa-users"></i><span>Cộng đồng</span></a>
+                <a href="caidat.html" class="nav-item"><i class="fas fa-cog"></i><span>Cài đặt</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info" id="userInfo">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Người Dùng</div>
+                        <div class="user-email" id="userEmail">user@email.com</div>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Đăng xuất</span></button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1><i class="fas fa-robot"></i> Tạo thẻ bằng AI</h1>
+                <p>Tải tài liệu lên, AI sẽ tự động trích xuất và tạo flashcard cho bạn.</p>
+            </div>
+
+            <div class="ai-upload">
+                <div class="form-group">
+                    <label for="aiDeckName">Tên bộ thẻ <span class="required">*</span></label>
+                    <input type="text" id="aiDeckName" placeholder="Nhập tên bộ thẻ, ví dụ: Tiếng Anh chủ đề Giao tiếp" />
+                </div>
+
+                <div class="form-group">
+                    <label>Tải tài liệu lên (PDF, DOCX, TXT)</label>
+                    <div class="drop-zone" id="dropZone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Kéo thả file vào đây hoặc bấm để chọn</p>
+                        <input type="file" id="fileInput" accept=".pdf,.docx,.txt" multiple />
+                    </div>
+                    <div id="fileList"></div>
+                </div>
+
+                <button class="btn btn-gradient btn-lg" id="aiGenerateBtn" style="width:100%;">
+                    <i class="fas fa-magic"></i> Tạo Flashcard từ AI
+                </button>
+
+                <div id="aiResult"></div>
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <a href="taothe.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Quay lại chọn phương thức
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="../js/db.js"></script>
+    <script src="../js/db-seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/taothe.js"></script>
+</body>
+</html>

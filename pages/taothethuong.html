@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tạo thẻ thủ công - ForgetMeNot</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/taothe.css" />
+
+    <script type="importmap">
+        { "imports": { "./js/": "../js/" } }
+    </script>
+    <script type="module" src="../js/app.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar (giống trên) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo"><i class="fas fa-brain"></i><span>ForgetMeNot</span></div>
+                <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+                <a href="khothe.html" class="nav-item"><i class="fas fa-layer-group"></i><span>Kho thẻ</span></a>
+                <a href="taothe.html" class="nav-item active"><i class="fas fa-plus-circle"></i><span>Tạo thẻ</span></a>
+                <a href="ontap.html" class="nav-item"><i class="fas fa-book-open-reader"></i><span>Ôn tập</span></a>
+                <a href="thongke.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Thống kê</span></a>
+                <a href="congdong.html" class="nav-item"><i class="fas fa-users"></i><span>Cộng đồng</span></a>
+                <a href="caidat.html" class="nav-item"><i class="fas fa-cog"></i><span>Cài đặt</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info" id="userInfo">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Người Dùng</div>
+                        <div class="user-email" id="userEmail">user@email.com</div>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Đăng xuất</span></button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1><i class="fas fa-pen-fancy"></i> Tạo thẻ thủ công</h1>
+                <p>Nhập từng thẻ một cách dễ dàng. Bạn có thể thêm nhiều thẻ trước khi lưu.</p>
+            </div>
+
+            <div class="create-form">
+                <!-- Chọn bộ thẻ -->
+                <div class="form-group">
+                    <label for="deckSelect">Chọn bộ thẻ <span class="required">*</span></label>
+                    <select id="deckSelect">
+                        <option value="">-- Chọn bộ thẻ hiện có --</option>
+                        <option value="new">+ Tạo bộ thẻ mới</option>
+                    </select>
+                </div>
+                <div class="form-group" id="newDeckGroup" style="display: none;">
+                    <label for="newDeckName">Tên bộ thẻ mới <span class="required">*</span></label>
+                    <input type="text" id="newDeckName" placeholder="Ví dụ: Từ vựng TOEIC" />
+                </div>
+
+                <!-- Nhập thẻ -->
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="cardFront">Mặt trước (từ/câu hỏi) <span class="required">*</span></label>
+                        <textarea id="cardFront" rows="2" placeholder="Ví dụ: apple"></textarea>
+                    </div>
+                    <div class="form-group half">
+                        <label for="cardBack">Mặt sau (nghĩa/đáp án) <span class="required">*</span></label>
+                        <textarea id="cardBack" rows="2" placeholder="Ví dụ: quả táo"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" id="addCardBtn">
+                        <i class="fas fa-plus"></i> Thêm thẻ
+                    </button>
+                    <button class="btn btn-success" id="saveDeckBtn">
+                        <i class="fas fa-save"></i> Lưu bộ thẻ
+                    </button>
+                </div>
+
+                <!-- Danh sách thẻ -->
+                <div id="cardPreview">
+                    <h4>Danh sách thẻ sẽ được thêm: <span id="cardCount">0</span></h4>
+                    <ul id="cardList"></ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <a href="taothe.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Quay lại chọn phương thức
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="../js/db.js"></script>
+    <script src="../js/db-seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/taothe.js"></script>
+</body>
+</html>

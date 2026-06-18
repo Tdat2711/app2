@@ -1,0 +1,48 @@
+{
+  "forgetmenot_users": [
+    {
+      "id": "FMN001",
+      "name": "Demo User",
+      "email": "demo@forgetmenot.com",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "streak": 0,
+      "totalCards": 0,
+      "totalDecks": 1,
+      "totalTime": 0
+    }
+  ],
+  "forgetmenot_settings": {
+    "darkMode": false,
+    "language": "vi",
+    "reminder": true,
+    "cardsPerSession": 10,
+    "shareProgress": true,
+    "publicDecks": false
+  },
+  "forgetmenot_decks": [
+    {
+      "id": "D001",
+      "name": "Demo Deck",
+      "description": "Bộ thẻ demo",
+      "icon": "🧠",
+      "category": "general",
+      "totalCards": 3,
+      "learned": 0,
+      "starred": false,
+      "createdAt": "2026-05-01T00:00:00.000Z",
+      "dueDate": null,
+      "flashcards": [
+        { "id": "F001", "question": "1+1", "answer": "2" },
+        { "id": "F002", "question": "Capital of Vietnam", "answer": "Hanoi" },
+        { "id": "F003", "question": "Color of sky", "answer": "Blue" }
+      ]
+    }
+  ],
+  "forgetmenot_calendar": {
+    "checkedDates": [],
+    "streak": 0,
+    "studyStats": {}
+  },
+  "forgetmenot_friends": [],
+  "forgetmenot_groups": []
+}

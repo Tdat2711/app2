@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trình Thiết Kế Bộ Thẻ Cao Cấp - ForgetMeNot</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/taothe.css" />
+
+    <style>
+        /* Tách biệt rõ ràng 2 tab */
+        .tab-content {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--white);
+            margin-top: 16px;
+            min-height: 300px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .creation-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 0;
+        }
+        .tab-trigger {
+            padding: 10px 20px;
+            border-radius: 8px 8px 0 0;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-bottom: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .tab-trigger.active {
+            background: var(--white);
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .flashcard-crud-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: var(--bg-light);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-light);
+        }
+        .flashcard-crud-item input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "@google/generative-ai": "https://esm.run/@google/generative-ai"
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar giữ nguyên -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <span>ForgetMeNot</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+                <a href="khothe.html" class="nav-item"><i class="fas fa-layer-group"></i><span>Kho thẻ</span></a>
+                <a href="taothe.html" class="nav-item active">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo bộ thẻ</span>
+                </a>
+                <a href="ontap.html" class="nav-item"><i class="fas fa-book-open-reader"></i><span>Ôn tập</span></a>
+                <a href="thongke.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Thống kê</span></a>
+                <a href="congdong.html" class="nav-item"><i class="fas fa-users"></i><span>Cộng đồng</span></a>
+                <a href="caidat.html" class="nav-item"><i class="fas fa-cog"></i><span>Cài đặt</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info" id="userInfo">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Người Dùng</div>
+                        <div class="user-email" id="userEmail">user@email.com</div>
+                    </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="creator-container">
+
+                <div class="content-header d-flex justify-between align-center mb-3">
+                    <div>
+                        <h1>Tạo học phần mới</h1>
+                        <p class="text-gray">Thiết lập tiêu đề, mô tả và tiến hành phân tách các thẻ từ vựng hoặc cấu trúc kiến thức.</p>
+                    </div>
+                    <div class="form-actions-top d-flex gap-1">
+                        <button class="btn btn-outline" id="favoriteDeckBtn">
+                            <i class="far fa-star"></i> Yêu thích bộ này
+                        </button>
+                        <button class="btn btn-danger" id="deleteDeckBtn" style="display:none;">
+                            <i class="fas fa-trash-alt"></i> Xóa bộ thẻ
+                        </button>
+                        <button class="btn btn-gradient" id="finalizeDeckBtn">
+                            <i class="fas fa-check"></i> Lưu bộ thẻ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Form thông tin bộ thẻ -->
+                <div class="create-form mb-3">
+                    <div class="form-group">
+                        <label for="deckSelect">Chọn bộ thẻ để chỉnh sửa hoặc tạo mới</label>
+                        <select id="deckSelect" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border);">
+                            <option value="">-- Chọn bộ thẻ đã có --</option>
+                            <option value="new_deck">+ Khởi tạo bộ thẻ mới</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="newDeckGroup" style="display:none;">
+                        <label for="newDeckName">Tên bộ thẻ mới <span class="required">*</span></label>
+                        <input type="text" id="newDeckName" placeholder="Nhập tên bộ thẻ mới" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deckDescInput">Mô tả chi tiết</label>
+                        <textarea id="deckDescInput" placeholder="Thêm mô tả ngắn gọn về mục tiêu học tập của học phần này..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="deckCategorySelect">Phân loại môn học / Danh mục</label>
+                            <select id="deckCategorySelect">
+                                <option value="tech">Công nghệ thông tin & AI Engineering</option>
+                                <option value="english">Ngoại ngữ / Tiếng Anh chuyên ngành</option>
+                                <option value="general">Kiến thức tổng hợp</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="deckDueDate">Ngày dự kiến hoàn thành</label>
+                            <input type="date" id="deckDueDate" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="creation-tabs">
+                    <button class="tab-trigger active" data-tab="manual" id="triggerManual">
+                        <i class="fas fa-keyboard"></i> Biên soạn thủ công
+                    </button>
+                    <button class="tab-trigger" data-tab="ai" id="triggerAi">
+                        <i class="fas fa-wand-magic-sparkles"></i> AI Generation (Tự động hóa)
+                    </button>
+                </div>
+
+                <!-- Tab: Thủ công -->
+                <div class="tab-content active" id="manualPane">
+                    <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+                        <input type="text" id="cardFront" placeholder="Mặt trước (câu hỏi)" style="flex:1; min-width:200px; padding:10px; border-radius:8px; border:1px solid var(--border);" />
+                        <input type="text" id="cardBack" placeholder="Mặt sau (câu trả lời)" style="flex:1; min-width:200px; padding:10px; border-radius:8px; border:1px solid var(--border);" />
+                        <button class="btn btn-primary" id="addCardBtn"><i class="fas fa-plus"></i> Thêm</button>
+                        <button class="btn btn-outline" id="clearCardBtn"><i class="fas fa-undo"></i> Xóa trắng</button>
+                    </div>
+
+                    <div id="cardList" style="margin-top:12px;"></div>
+                    <div style="display:flex; justify-content:space-between; margin-top:8px;">
+                        <span class="text-muted">Tổng số thẻ: <strong id="cardCount">0</strong></span>
+                    </div>
+                </div>
+
+                <!-- Tab: AI -->
+                <div class="tab-content" id="aiPane" style="display:none;">
+                    <div class="ai-upload">
+                        <div class="ai-header mb-2">
+                            <h3><i class="fas fa-bolt"></i> Trích xuất kiến thức thông minh bằng AI</h3>
+                            <p class="text-gray">Hệ thống sử dụng mô hình ngôn ngữ lớn để phân tích giáo trình và tự động sinh câu hỏi kèm đáp án.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="geminiApiKeyInput">Cấu hình API Key cá nhân (Gemini API)</label>
+                            <input type="password" id="geminiApiKeyInput" placeholder="Dán mã bí mật Gemini API Key của bạn tại đây để tăng tốc độ xử lý..." />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aiTextRaw">Văn bản thô hoặc Yêu cầu định hướng cho AI</label>
+                            <textarea id="aiTextRaw" placeholder="Ví dụ: Đọc văn bản dưới đây và trích xuất thành bộ thẻ về 4 nguyên lý chính của OOP C++... Hoặc dán trực tiếp đoạn ghi chú bài giảng của bạn vào đây."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tải lên tài liệu giảng đường (PDF, DOCX, TXT)</label>
+                            <div class="drop-zone" id="dropZone">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Kéo thả tệp tài liệu học tập của bạn vào đây hoặc click để duyệt từ thiết bị</p>
+                                <input type="file" id="fileInput" accept=".pdf,.docx,.txt" />
+                            </div>
+                            <div id="fileList"></div>
+                        </div>
+
+                        <button class="btn btn-gradient w-100" id="aiGenerateBtn">
+                            <i class="fas fa-wand-magic-sparkles"></i> Tiến hành xử lý tài liệu & Sinh thẻ học tập
+                        </button>
+
+                        <div id="aiResult" class="mt-2" style="display: none;"></div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Thông báo</span>
+    </div>
+
+    <script src="../js/db.js"></script>
+    <script src="../js/db-seed.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/auth.js"></script>
+    <script type="module" src="../js/taothe.js"></script>
+</body>
+</html>
