@@ -468,3 +468,143 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2200);
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ... (phần import và khởi tạo hiện tại)
+
+// ===== QUẢN LÝ DANH MỤC =====
+const CATEGORIES_KEY = 'forgetmenot_categories';
+
+function getCategories() {
+    try {
+        return JSON.parse(localStorage.getItem(CATEGORIES_KEY)) || [];
+    } catch {
+        return [];
+    }
+}
+
+function saveCategories(categories) {
+    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
+}
+
+function loadCategoriesToSelect() {
+    const select = document.getElementById('deckCategorySelect');
+    if (!select) return;
+    const categories = getCategories();
+    // Giữ lại các option mặc định nếu có
+    const defaultOptions = select.querySelectorAll('option[data-default]');
+    select.innerHTML = '';
+    // Thêm các option mặc định
+    const defaults = [
+        { value: 'tech', label: 'Công nghệ thông tin & AI Engineering' },
+        { value: 'english', label: 'Ngoại ngữ / Tiếng Anh chuyên ngành' },
+        { value: 'general', label: 'Kiến thức tổng hợp' }
+    ];
+    defaults.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d.value;
+        opt.textContent = d.label;
+        opt.dataset.default = 'true';
+        select.appendChild(opt);
+    });
+    // Thêm danh mục từ localStorage
+    categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        select.appendChild(opt);
+    });
+}
+
+function addNewCategory(name) {
+    if (!name || name.trim() === '') return false;
+    const categories = getCategories();
+    if (categories.includes(name.trim())) return false;
+    categories.push(name.trim());
+    saveCategories(categories);
+    loadCategoriesToSelect();
+    return true;
+}
+
+// ===== MODAL THÊM DANH MỤC =====
+function initCategoryModal() {
+    const modal = document.getElementById('addCategoryModal');
+    const openBtn = document.getElementById('addCategoryBtn');
+    const closeBtn = document.getElementById('cancelCategoryBtn');
+    const confirmBtn = document.getElementById('confirmCategoryBtn');
+    const input = document.getElementById('newCategoryInput');
+
+    if (!openBtn || !modal) return;
+
+    openBtn.addEventListener('click', () => {
+        modal.classList.add('open');
+        input.value = '';
+        input.focus();
+    });
+
+    const closeModal = () => {
+        modal.classList.remove('open');
+        input.value = '';
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    confirmBtn.addEventListener('click', () => {
+        const name = input.value.trim();
+        if (!name) {
+            showToast('Vui lòng nhập tên danh mục', 'warning');
+            return;
+        }
+        if (addNewCategory(name)) {
+            showToast('Đã thêm danh mục: ' + name, 'success');
+            closeModal();
+        } else {
+            showToast('Danh mục đã tồn tại!', 'warning');
+        }
+    });
+
+    // Enter để thêm
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            confirmBtn.click();
+        }
+    });
+}
+
+// ===== GỌI KHI DOM LOAD =====
+document.addEventListener('DOMContentLoaded', function() {
+    // ... phần khởi tạo hiện tại ...
+    loadCategoriesToSelect();
+    initCategoryModal();
+});

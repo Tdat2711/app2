@@ -1,166 +1,257 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cài Đặt - ForgetMeNot</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/caidat.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cài Đặt · ForgetMeNot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/caidat.css" />
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <i class="fas fa-brain"></i>
-                    <span>ForgetMeNot</span>
-                </div>
-                <button class="sidebar-toggle" id="sidebarToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>
-                <a href="khothe.html" class="nav-item"><i class="fas fa-layer-group"></i><span>Kho thẻ</span></a>
-                <a href="taothe.html" class="nav-item active">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Tạo bộ thẻ</span>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo"><i class="fas fa-brain"></i><span>ForgetMeNot</span></div>
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+        <a href="khothe.html" class="nav-item"><i class="fas fa-layer-group"></i><span>Kho thẻ</span></a>
+        <a href="taothe.html" class="nav-item"><i class="fas fa-plus-circle"></i><span>Tạo bộ thẻ</span></a>
+        <a href="ontap.html" class="nav-item"><i class="fas fa-book-open-reader"></i><span>Ôn tập</span></a>
+        <a href="thongke.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Thống kê</span></a>
+        <a href="congdong.html" class="nav-item"><i class="fas fa-users"></i><span>Cộng đồng</span></a>
+        <a href="caidat.html" class="nav-item active"><i class="fas fa-cog"></i><span>Cài đặt</span></a>
+      </nav>
+      <div class="sidebar-footer">
+                <a href="caidat.html">
+                    <div class="user-info" id="userInfo">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <div class="user-name" id="userName">Người Dùng</div>
+                            <div class="user-email" id="userEmail">user@email.com</div>
+                        </div>
+                    </div>
                 </a>
-                <a href="ontap.html" class="nav-item"><i class="fas fa-book-open-reader"></i><span>Ôn tập</span></a>
-                <a href="thongke.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Thống kê</span></a>
-                <a href="congdong.html" class="nav-item"><i class="fas fa-users"></i><span>Cộng đồng</span></a>
-                <a href="caidat.html" class="nav-item"><i class="fas fa-cog"></i><span>Cài đặt</span></a>
-            </nav>
-            <div class="sidebar-footer">
-                <div class="user-info" id="userInfo">
-                    <div class="user-avatar"><i class="fas fa-user"></i></div>
-                    <div class="user-details">
-                        <div class="user-name" id="userName"></div>
-                        <div class="user-email" id="userEmail"></div>
-                    </div>
-                
-        </aside>
-        
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="content-header">
-                <h1>Cài Đặt</h1>
-                <p>Tùy chỉnh ứng dụng theo cách của bạn</p>
             </div>
-            
-            <!-- Settings -->
-            <div class="settings-container">
-                <!-- Appearance -->
-                <div class="setting-section">
-                    <h3><i class="fas fa-palette"></i> Giao diện</h3>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Chế độ tối</span>
-                            <span class="setting-desc">Chuyển sang giao diện tối để dễ nhìn hơn</span>
-                        </div>
-                        <label class="toggle">
-                            <input type="checkbox" id="darkModeToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Ngôn ngữ</span>
-                            <span class="setting-desc">Chọn ngôn ngữ hiển thị</span>
-                        </div>
-                        <select id="languageSelect">
-                            <option value="vi">Tiếng Việt</option>
-                            <option value="en">English</option>
-                            <option value="ja">日本語</option>
-                            <option value="ko">한국어</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- Learning -->
-                <div class="setting-section">
-                    <h3><i class="fas fa-brain"></i> Học tập</h3>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Thông báo ôn tập</span>
-                            <span class="setting-desc">Nhắc nhở bạn ôn tập hàng ngày</span>
-                        </div>
-                        <label class="toggle">
-                            <input type="checkbox" id="reminderToggle" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Số thẻ mỗi phiên</span>
-                            <span class="setting-desc">Số lượng thẻ trong mỗi buổi ôn tập</span>
-                        </div>
-                        <select id="cardsPerSession">
-                            <option value="5">5 thẻ</option>
-                            <option value="10" selected>10 thẻ</option>
-                            <option value="15">15 thẻ</option>
-                            <option value="20">20 thẻ</option>
-                            <option value="30">30 thẻ</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Thuật toán Spaced Repetition</span>
-                            <span class="setting-desc">Hệ thống lặp lại ngắt quãng thông minh</span>
-                        </div>
-                        <span class="status-badge active">SM-2</span>
-                    </div>
-                </div>
-                
-                <!-- Privacy -->
-                <div class="setting-section">
-                    <h3><i class="fas fa-shield-alt"></i> Quyền riêng tư</h3>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Chia sẻ tiến độ</span>
-                            <span class="setting-desc">Hiển thị tiến độ học tập với cộng đồng</span>
-                        </div>
-                        <label class="toggle">
-                            <input type="checkbox" id="shareProgress" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Bộ thẻ công khai</span>
-                            <span class="setting-desc">Cho phép người khác xem bộ thẻ của bạn</span>
-                        </div>
-                        <label class="toggle">
-                            <input type="checkbox" id="publicDecks">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Save -->
-                <div class="settings-actions">
-                    <button class="btn btn-primary" id="saveSettings">
-                        <i class="fas fa-save"></i> Lưu cài đặt
-                    </button>
-                </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+      <div class="content-header">
+        <h1>Cài Đặt</h1>
+        <p>Quản lý tài khoản và tùy chọn ứng dụng</p>
+      </div>
+
+      <div class="settings-container">
+        <!-- Profile Card -->
+        <section class="profile-card">
+          <div class="profile-header">
+            <div class="avatar-wrapper">
+              <div class="avatar-large" id="avatarDisplay"><i class="fas fa-user"></i></div>
+              <button class="btn btn-outline btn-sm" id="changeAvatarBtn"><i class="fas fa-camera"></i> Đổi ảnh</button>
             </div>
-        </main>
-    </div>
-    
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage"></span>
-    </div>
-    
-    <script src="../js/db.js"></script>
-    <script src="../js/db-seed.js"></script>
-    <script src="../js/sidebar.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/caidat.js"></script>
+            <div class="profile-meta">
+              <h2 id="displayNameLabel">Tên hiển thị</h2>
+              <p class="email" id="emailLabel">email@example.com</p>
+              <p class="joined"><i class="far fa-calendar-alt"></i> Tham gia: <span id="joinDateLabel">--/--/----</span></p>
+              <div class="profile-actions">
+                <button class="btn btn-outline btn-sm" id="changePasswordBtn"><i class="fas fa-key"></i> Đổi mật khẩu</button>
+                <button class="btn btn-outline btn-sm" id="manageSessionsBtn"><i class="fas fa-laptop"></i> Quản lý phiên</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tabs -->
+        <div class="settings-tabs">
+          <button class="tab-btn active" data-tab="general"><i class="fas fa-sliders-h"></i> Chung</button>
+          <button class="tab-btn" data-tab="notifications"><i class="fas fa-bell"></i> Thông báo</button>
+          <button class="tab-btn" data-tab="security"><i class="fas fa-shield-alt"></i> Bảo mật</button>
+          <button class="tab-btn" data-tab="account"><i class="fas fa-user-cog"></i> Tài khoản</button>
+        </div>
+
+        <!-- Tab General -->
+        <div class="tab-content active" id="tab-general">
+          <div class="setting-section">
+            <h3><i class="fas fa-palette"></i> Giao diện</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Chế độ tối</span>
+                <span class="setting-desc">Chuyển sang giao diện tối để dễ nhìn hơn</span>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Ngôn ngữ</span>
+                <span class="setting-desc">Chọn ngôn ngữ hiển thị</span>
+              </div>
+              <select id="languageSelect">
+                <option value="vi">Tiếng Việt</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+              </select>
+            </div>
+          </div>
+          <div class="setting-section">
+            <h3><i class="fas fa-brain"></i> Học tập</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Nhắc nhở ôn tập</span>
+                <span class="setting-desc">Nhận thông báo hàng ngày để ôn tập</span>
+              </div>
+              <label class="toggle"><input type="checkbox" id="reminderToggle" checked /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Thông báo khi đến hạn</span>
+                <span class="setting-desc">Nhắc nhở khi bộ thẻ sắp hết hạn</span>
+              </div>
+              <label class="toggle"><input type="checkbox" id="dueDateToggle" checked /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Thông báo thành tích</span>
+                <span class="setting-desc">Thông báo khi đạt mốc học tập</span>
+              </div>
+              <label class="toggle"><input type="checkbox" id="achievementToggle" checked /><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Notifications -->
+        <div class="tab-content" id="tab-notifications">
+          <div class="setting-section">
+            <h3><i class="fas fa-bell"></i> Cài đặt thông báo</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Thông báo cộng đồng</span>
+                <span class="setting-desc">Thông báo về hoạt động cộng đồng</span>
+              </div>
+              <label class="toggle"><input type="checkbox" id="communityToggle" /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Email thông báo</span>
+                <span class="setting-desc">Nhận thông báo qua email</span>
+              </div>
+              <label class="toggle"><input type="checkbox" id="emailToggle" /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Âm thanh thông báo</span>
+                <span class="setting-desc">Phát âm thanh khi có thông báo</span>
+              </div>
+              <label class="toggle"><input type="checkbox" id="soundToggle" checked /><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Security -->
+        <div class="tab-content" id="tab-security">
+          <div class="setting-section">
+            <h3><i class="fas fa-shield-alt"></i> Bảo mật</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Xác thực hai yếu tố (2FA)</span>
+                <span class="setting-desc">Thêm một lớp bảo mật bằng ứng dụng authenticator</span>
+              </div>
+              <label class="toggle"><input type="checkbox" id="twoFactorToggle" /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Đổi mật khẩu</span>
+                <span class="setting-desc">Cập nhật mật khẩu tài khoản định kỳ</span>
+              </div>
+              <button class="btn btn-outline btn-sm" id="changePasswordBtn2"><i class="fas fa-key"></i> Đổi</button>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Phiên đăng nhập</span>
+                <span class="setting-desc">Quản lý các phiên đang hoạt động</span>
+              </div>
+              <button class="btn btn-outline btn-sm" id="manageSessionsBtn2"><i class="fas fa-laptop"></i> Quản lý</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Account -->
+        <div class="tab-content" id="tab-account">
+          <div class="setting-section">
+            <h3><i class="fas fa-user-edit"></i> Thông tin cá nhân</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Tên hiển thị</span>
+                <span class="setting-desc">Tên sẽ được hiển thị trên hồ sơ của bạn</span>
+              </div>
+              <input type="text" id="displayNameInput" placeholder="Nhập tên hiển thị" />
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Email</span>
+                <span class="setting-desc">Địa chỉ email đã đăng ký</span>
+              </div>
+              <input type="email" id="emailInput" disabled />
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Ngày tham gia</span>
+                <span class="setting-desc">Ngày bạn tạo tài khoản</span>
+              </div>
+              <input type="text" id="joinDateInput" disabled />
+            </div>
+          </div>
+
+          <div class="setting-section danger-zone">
+            <h3><i class="fas fa-exclamation-triangle"></i> Vùng nguy hiểm</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Đăng xuất khỏi tất cả thiết bị</span>
+                <span class="setting-desc">Đăng xuất khỏi tất cả phiên đang hoạt động</span>
+              </div>
+              <button class="btn btn-danger btn-sm" id="logoutAllBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất tất cả</button>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Xóa tài khoản</span>
+                <span class="setting-desc">Xóa vĩnh viễn tài khoản và tất cả dữ liệu</span>
+              </div>
+              <button class="btn btn-danger btn-sm" id="deleteAccountBtn"><i class="fas fa-trash-alt"></i> Xóa tài khoản</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Save -->
+        <div class="settings-actions">
+          <button class="btn btn-primary" id="saveSettings"><i class="fas fa-save"></i> Lưu cài đặt</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage"></span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/db.js"></script>
+  <script src="../js/db-seed.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/auth.js"></script>
+  <script type="module" src="../js/caidat.js"></script>
+  <script src="../js/main.js"></script>
 </body>
 </html>

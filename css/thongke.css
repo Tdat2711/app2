@@ -7,6 +7,8 @@
     --warning: #f59e0b;
     --success: #10b981;
     --bg-light: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-body: #f8fafc;
     --text-dark: #1e293b;
     --text-gray: #64748b;
     --border: #e2e8f0;
@@ -19,6 +21,21 @@
     --radius-md: 10px;
     --radius-lg: 16px;
     --radius-xl: 24px;
+}
+
+/* ===== DARK MODE ===== */
+html.dark-mode {
+    --bg-card: #152238;
+    --bg-body: #0f1729;
+    --bg-light: #1a2a44;
+    --text-dark: #f1f5f9;
+    --text-gray: #94a3b8;
+    --border: #2a3f5a;
+    --border-light: #1e2d45;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.6);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.7);
+    --white: #152238;  /* trong dark mode, white = nền card */
 }
 
 /* ===== HEADER ===== */
@@ -47,7 +64,7 @@
 .period-selector {
     display: flex;
     gap: 6px;
-    background: var(--white);
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 4px;
@@ -83,7 +100,7 @@
     align-items: center;
     gap: 16px;
     padding: 20px 24px;
-    background: var(--white);
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     transition: all 0.2s;
@@ -145,7 +162,7 @@
     margin-bottom: 32px;
 }
 .chart-card {
-    background: var(--white);
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 24px;
@@ -168,7 +185,7 @@
 
 /* ===== DECK PERFORMANCE ===== */
 .deck-performance {
-    background: var(--white);
+    background: var(--bg-card);       /* dùng biến để đồng bộ dark mode */
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 24px;
@@ -198,13 +215,14 @@
     transition: background 0.2s;
 }
 .deck-perf-item:hover {
-    background: var(--border);
+    background: var(--border-light);
 }
 .deck-perf-name {
     display: flex;
     align-items: center;
     gap: 10px;
     font-weight: 500;
+    color: var(--text-dark);
 }
 .deck-perf-name .icon {
     font-size: 20px;
@@ -217,7 +235,7 @@
 .deck-perf-progress .bar {
     flex: 1;
     height: 6px;
-    background: var(--bg-light);
+    background: var(--border);
     border-radius: 4px;
     overflow: hidden;
 }

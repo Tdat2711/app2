@@ -8,7 +8,7 @@ const CRAM_DAYS_THRESHOLD = 7; // Tự động kích hoạt Cram Mode khi còn <
 // ===================== STATE =====================
 let decks = [];
 let currentDeck = null;
-let studyCards = [];          // Danh sách thẻ sẽ học trong phiên này (đã lọc)
+let studyCards = [];
 let currentIndex = 0;
 let isFlipped = false;
 let isCramMode = false;
@@ -41,7 +41,6 @@ function init() {
     loadDecks();
     renderDeckList();
     bindEvents();
-    // Kiểm tra nếu có deck được chọn từ nơi khác (ví dụ từ kho thẻ)
     const selectedId = localStorage.getItem('forgetmenot_current_study_deck');
     if (selectedId) {
         const deck = decks.find(d => d.id === selectedId);
@@ -54,13 +53,12 @@ function init() {
 function loadDecks() {
     decks = getUserDecks();
     if (!decks) decks = [];
-    // Đảm bảo mỗi flashcard có thuộc tính Spaced Repetition nếu chưa có
     decks.forEach(deck => {
         if (deck.flashcards) {
             deck.flashcards.forEach(card => {
                 if (!card.repetition) {
                     card.repetition = {
-                        level: 0,           // 0=chưa học, 1-5
+                        level: 0,
                         easeFactor: 2.5,
                         interval: 0,
                         lastReviewed: null,
@@ -84,18 +82,31 @@ function renderDeckList() {
     emptyState.style.display = 'none';
     totalDecksCount.textContent = decks.length;
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // ===== SẮP XẾP: Cram Mode lên đầu =====
+    const sortedDecks = [...decks].sort((a, b) => {
+        const aDue = a.dueDate ? new Date(a.dueDate) : null;
+        const bDue = b.dueDate ? new Date(b.dueDate) : null;
+        if (!aDue && !bDue) return 0;
+        if (!aDue) return 1;
+        if (!bDue) return -1;
+        const aDays = Math.ceil((aDue - today) / (1000 * 60 * 60 * 24));
+        const bDays = Math.ceil((bDue - today) / (1000 * 60 * 60 * 24));
+        return aDays - bDays;
+    });
+
     let html = '';
-    decks.forEach(deck => {
-        const today = new Date();
-        const dueDate = deck.dueDate ? new Date(deck.dueDate) : null;
-        const daysLeft = dueDate ? Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24)) : null;
+    sortedDecks.forEach(deck => {
+        // Sử dụng hàm getDaysLeft chuẩn từ utils.js để tránh sai số
+        const daysLeft = getDaysLeft(deck.dueDate);
         const isCram = (daysLeft !== null && daysLeft <= CRAM_DAYS_THRESHOLD);
 
-        // Đếm số thẻ cần ôn hôm nay (nextReviewDate <= today)
         let dueCards = 0;
         if (deck.flashcards) {
             dueCards = deck.flashcards.filter(c => {
-                if (!c.repetition || c.repetition.level === 0) return true; // Chưa học
+                if (!c.repetition || c.repetition.level === 0) return true;
                 if (!c.repetition.nextReviewDate) return true;
                 return new Date(c.repetition.nextReviewDate) <= today;
             }).length;
@@ -104,16 +115,22 @@ function renderDeckList() {
         const totalCards = deck.flashcards ? deck.flashcards.length : 0;
         const learned = deck.flashcards ? deck.flashcards.filter(c => c.repetition && c.repetition.level > 0).length : 0;
 
+        const cramClass = isCram ? 'cram-mode' : '';
+        const dueBadgeClass = daysLeft !== null && daysLeft <= 0 ? 'overdue' : (daysLeft !== null && daysLeft <= 3 ? 'soon' : '');
+
         html += `
-            <div class="deck-item ${isCram ? 'cram-warning' : ''}" data-id="${deck.id}">
+            <div class="deck-item ${cramClass}" data-id="${deck.id}">
                 <div class="deck-icon">${deck.icon || '📁'}</div>
                 <div class="deck-info">
-                    <div class="deck-name">${deck.name}</div>
+                    <div class="deck-name">
+                        ${escapeHtml(deck.name)}
+                        ${isCram ? `<span class="cram-badge"><i class="fas fa-clock"></i> CẤP TỐC</span>` : ''}
+                    </div>
                     <div class="deck-meta">
                         <span><i class="fas fa-layer-group"></i> ${totalCards} thẻ</span>
                         <span><i class="fas fa-check-circle"></i> ${learned} đã học</span>
                         <span><i class="fas fa-clock"></i> ${dueCards} cần ôn</span>
-                        ${dueDate ? `<span class="due-badge ${daysLeft <= 0 ? 'overdue' : daysLeft <= 3 ? 'soon' : ''}">
+                        ${deck.dueDate ? `<span class="due-badge ${dueBadgeClass}">
                             ${daysLeft <= 0 ? '⚠️ Quá hạn' : `📅 ${daysLeft} ngày`}
                         </span>` : ''}
                     </div>
@@ -126,7 +143,6 @@ function renderDeckList() {
     });
     decksGrid.innerHTML = html;
 
-    // Gắn sự kiện click cho nút "Ôn luyện"
     document.querySelectorAll('.btn-study').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -137,6 +153,12 @@ function renderDeckList() {
     });
 }
 
+function escapeHtml(text) {
+    if (!text) return '';
+    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
 // ===================== BẮT ĐẦU HỌC =====================
 function startStudy(deck) {
     currentDeck = deck;
@@ -144,13 +166,10 @@ function startStudy(deck) {
     isFlipped = false;
     isCramMode = false;
 
-    // Lọc danh sách thẻ cần học trong phiên này:
-    // - Ưu tiên thẻ có nextReviewDate <= hôm nay hoặc chưa học
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     let cards = deck.flashcards ? [...deck.flashcards] : [];
-    // Sắp xếp: thẻ chưa học lên trước, sau đó đến thẻ cần ôn, rồi đến thẻ đã học gần đây
     cards.sort((a, b) => {
         const aDue = a.repetition && a.repetition.nextReviewDate ? new Date(a.repetition.nextReviewDate) : new Date(0);
         const bDue = b.repetition && b.repetition.nextReviewDate ? new Date(b.repetition.nextReviewDate) : new Date(0);
@@ -159,34 +178,26 @@ function startStudy(deck) {
         return aDue - bDue;
     });
 
-    // Chỉ lấy các thẻ cần học hôm nay (nextReviewDate <= today hoặc chưa học)
-    // Nhưng nếu ít thẻ, có thể lấy thêm để đủ số lượng (tối đa 20 thẻ)
     studyCards = cards.filter(c => {
         if (!c.repetition || c.repetition.level === 0) return true;
         if (!c.repetition.nextReviewDate) return true;
         return new Date(c.repetition.nextReviewDate) <= today;
     });
-    // Nếu không có thẻ nào cần học, lấy tất cả (để ôn lại)
     if (studyCards.length === 0) {
-        studyCards = cards.slice(0, 20); // Giới hạn 20 thẻ cho 1 phiên
+        studyCards = cards.slice(0, 20);
     }
 
-    // Kiểm tra Cram Mode
-    const dueDate = deck.dueDate ? new Date(deck.dueDate) : null;
-    const daysLeft = dueDate ? Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24)) : null;
+    const daysLeft = getDaysLeft(deck.dueDate);
     if (daysLeft !== null && daysLeft <= CRAM_DAYS_THRESHOLD) {
         isCramMode = true;
-        // Trong Cram Mode, ưu tiên các thẻ chưa học hoặc sắp quá hạn
         studyCards = cards.filter(c => {
             if (!c.repetition || c.repetition.level === 0) return true;
             if (!c.repetition.nextReviewDate) return true;
             return new Date(c.repetition.nextReviewDate) <= today;
         });
         if (studyCards.length === 0) {
-            // Nếu tất cả đã học, lấy thẻ gần nhất
             studyCards = cards.slice(0, 20);
         }
-        // Cập nhật banner Cram
         cramBanner.style.display = 'flex';
         cramDaysLeft.textContent = daysLeft;
         cramDueCount.textContent = studyCards.length;
@@ -196,12 +207,9 @@ function startStudy(deck) {
         cramBanner.style.display = 'none';
     }
 
-    // Ẩn danh sách, hiện study container
     decksGrid.style.display = 'none';
     emptyState.style.display = 'none';
     studyContainer.style.display = 'block';
-
-    // Render thẻ đầu tiên
     renderCard();
 }
 
@@ -213,7 +221,6 @@ function renderCard() {
         return;
     }
     if (currentIndex >= studyCards.length) {
-        // Hoàn thành phiên học
         showToast('🎉 Hoàn thành! Bạn đã học xong tất cả thẻ trong phiên này.', 'success');
         backToDeckList();
         return;
@@ -224,13 +231,19 @@ function renderCard() {
     answerText.textContent = card.answer || '(Không có đáp án)';
     cardCounter.textContent = `${currentIndex + 1} / ${studyCards.length}`;
 
-    // Reset flip
     if (isFlipped) {
         flashcardInner.classList.remove('flipped');
         isFlipped = false;
     }
-
     updateProgress();
+
+
+    
+const intervalEl = document.querySelector('.study-interval .interval-value');
+if (intervalEl && card.repetition) {
+    const interval = card.repetition.interval || 0;
+    intervalEl.textContent = interval > 0 ? `${interval} ngày` : 'Chưa học';
+}
 }
 
 function updateProgress() {
@@ -255,7 +268,6 @@ function nextCard() {
         currentIndex++;
         renderCard();
     } else {
-        // Nếu đang ở thẻ cuối, coi như hoàn thành
         showToast('🎉 Hoàn thành phiên học!', 'success');
         backToDeckList();
     }
@@ -269,42 +281,39 @@ function prevCard() {
     }
 }
 
-// ===================== ĐÁNH GIÁ MỨC ĐỘ NHỚ (SPACED REPETITION) =====================
+// ===================== ĐÁNH GIÁ MỨC ĐỘ NHỚ =====================
 function rateCard(level) {
     if (!currentDeck || !studyCards || studyCards.length === 0) return;
     if (currentIndex >= studyCards.length) return;
 
     const card = studyCards[currentIndex];
-    // Cập nhật thông tin repetition cho card
     if (!card.repetition) {
         card.repetition = { level: 0, easeFactor: 2.5, interval: 0, lastReviewed: null, nextReviewDate: null };
     }
 
-    // Áp dụng thuật toán SM-2 đơn giản
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     let newLevel = card.repetition.level || 0;
     let easeFactor = card.repetition.easeFactor || 2.5;
     let interval = card.repetition.interval || 0;
 
-    if (level === 1) { // Quên
+    if (level === 1) {
         newLevel = 0;
         interval = 1;
         easeFactor = Math.max(1.3, easeFactor - 0.2);
-    } else if (level === 2) { // Khó
+    } else if (level === 2) {
         newLevel = Math.max(1, newLevel);
         interval = 1;
         easeFactor = Math.max(1.3, easeFactor - 0.15);
-    } else if (level === 3) { // Tốt
+    } else if (level === 3) {
         newLevel = Math.min(5, newLevel + 1);
         if (newLevel === 1) interval = 1;
         else if (newLevel === 2) interval = 3;
         else if (newLevel === 3) interval = 7;
         else if (newLevel === 4) interval = 14;
         else if (newLevel === 5) interval = 30;
-        // Không thay đổi easeFactor
-    } else if (level === 4) { // Dễ
+    } else if (level === 4) {
         newLevel = Math.min(5, newLevel + 2);
         if (newLevel === 1) interval = 1;
         else if (newLevel === 2) interval = 4;
@@ -314,7 +323,6 @@ function rateCard(level) {
         easeFactor = Math.min(4.0, easeFactor + 0.15);
     }
 
-    // Tính ngày ôn tiếp theo
     const nextDate = new Date(today);
     nextDate.setDate(today.getDate() + interval);
 
@@ -324,19 +332,15 @@ function rateCard(level) {
     card.repetition.lastReviewed = today.toISOString();
     card.repetition.nextReviewDate = nextDate.toISOString();
 
-    // Lưu vào deck
     saveDecks();
 
-    // Hiển thị thông báo
     const labels = ['', 'Quên', 'Khó', 'Tốt', 'Dễ'];
     showToast(`Đánh giá: ${labels[level]} ✅`, 'success');
 
-    // Chuyển sang thẻ tiếp theo
     if (currentIndex < studyCards.length - 1) {
         currentIndex++;
         renderCard();
     } else {
-        // Hết thẻ
         showToast('🎉 Hoàn thành phiên học!', 'success');
         backToDeckList();
     }
@@ -362,15 +366,11 @@ function backToDeckList() {
 
 // ===================== SỰ KIỆN =====================
 function bindEvents() {
-    // Flashcard click để lật
     flashcardWrapper.addEventListener('click', flipCard);
-
-    // Nút điều hướng
     prevBtn.addEventListener('click', prevCard);
     nextBtn.addEventListener('click', nextCard);
     backToDeckBtn.addEventListener('click', backToDeckList);
 
-    // Nút đánh giá
     ratingBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const level = parseInt(this.dataset.level);
@@ -378,7 +378,6 @@ function bindEvents() {
         });
     });
 
-    // Phím tắt
     document.addEventListener('keydown', function(e) {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         if (!studyContainer || studyContainer.style.display === 'none') return;
@@ -400,6 +399,5 @@ function bindEvents() {
     });
 }
 
-// ===================== EXPORT (cho window) =====================
 window.startStudy = startStudy;
 window.backToDeckList = backToDeckList;
