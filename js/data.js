@@ -171,3 +171,95 @@ export function saveAppData(data) {
   if (data.friends !== undefined) saveUserFriends(data.friends);
   if (data.groups !== undefined) saveUserGroups(data.groups);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --- Messages ---
+const MESSAGES_KEY = 'forgetmenot_messages';
+
+export function getMessages() {
+  return getData(MESSAGES_KEY, []);
+}
+
+export function saveMessages(messages) {
+  setData(MESSAGES_KEY, messages);
+}
+
+export function addMessage(message) {
+  const messages = getMessages();
+  messages.push(message);
+  saveMessages(messages);
+}
+
+// js/data.js (thêm vào cuối file)
+
+// --- Leaderboard ---
+const LEADERBOARD_KEY = 'forgetmenot_leaderboard';
+
+export function getLeaderboard() {
+  return getData(LEADERBOARD_KEY, []);
+}
+
+export function saveLeaderboard(data) {
+  setData(LEADERBOARD_KEY, data);
+}
+
+export function updateLeaderboard(userId, stats) {
+  const board = getLeaderboard();
+  const existing = board.find(item => item.userId === userId);
+  if (existing) {
+    Object.assign(existing, stats);
+  } else {
+    board.push({ userId, ...stats });
+  }
+  // Sắp xếp theo totalCards giảm dần
+  board.sort((a, b) => (b.totalCards || 0) - (a.totalCards || 0));
+  saveLeaderboard(board);
+  return board;
+}
+
+// --- Public Decks ---
+const PUBLIC_DECKS_KEY = 'forgetmenot_public_decks';
+
+export function getPublicDecks() {
+  return getData(PUBLIC_DECKS_KEY, []);
+}
+
+export function savePublicDecks(decks) {
+  setData(PUBLIC_DECKS_KEY, decks);
+}
+
+export function addPublicDeck(deck) {
+  const publicDecks = getPublicDecks();
+  // Kiểm tra trùng lặp
+  if (!publicDecks.find(d => d.id === deck.id)) {
+    publicDecks.push(deck);
+    savePublicDecks(publicDecks);
+  }
+}
+
+export function removePublicDeck(deckId) {
+  const publicDecks = getPublicDecks();
+  const filtered = publicDecks.filter(d => d.id !== deckId);
+  savePublicDecks(filtered);
+}
