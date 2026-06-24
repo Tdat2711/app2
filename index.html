@@ -11,9 +11,16 @@
 </head>
 <body>
 
-    <div class="loading-screen" id="loadingScreen">
+    <div class="loading-screen" id="loadingScreen" aria-hidden="true">
         <div class="loading-spinner"></div>
     </div>
+
+    <style>
+        /* Chống Flash of Light Theme: set màu nền/màu chữ theo darkMode trước khi JS chạy */
+        html { background: #f8fafc; color: #0f172a; }
+        /* Nếu có darkMode từ lần trước thì class sẽ được thêm rất sớm (JS/main.js sẽ làm),
+           phần này chỉ là fallback để tránh nhảy màu lớn. */
+    </style>
 
     <div class="landing-page">
 
