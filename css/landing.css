@@ -1,5 +1,9 @@
-/* Navbar */
-.navbar {
+/* ============================================================
+   LANDING.CSS – CHỈ ÁP DỤNG CHO TRANG CHỦ (có wrapper .landing-page)
+   ============================================================ */
+
+/* ---- Navbar ---- */
+.landing-page .navbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,13 +14,11 @@
     transition: all 0.3s ease;
     border-bottom: 1px solid transparent;
 }
-
-.navbar.scrolled {
+.landing-page .navbar.scrolled {
     border-bottom-color: var(--border);
     box-shadow: var(--shadow-md);
 }
-
-.nav-container {
+.landing-page .nav-container {
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 24px;
@@ -25,8 +27,7 @@
     align-items: center;
     height: 70px;
 }
-
-.logo {
+.landing-page .logo {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -34,41 +35,34 @@
     font-weight: 800;
     color: var(--primary);
 }
-
-.logo i {
+.landing-page .logo i {
     font-size: 24px;
 }
-
-.nav-menu {
+.landing-page .nav-menu {
     display: flex;
     gap: 32px;
     list-style: none;
 }
-
-.nav-menu a {
+.landing-page .nav-menu a {
     text-decoration: none;
     color: var(--text-dark);
     font-weight: 500;
     transition: color 0.2s;
 }
-
-.nav-menu a:hover {
+.landing-page .nav-menu a:hover {
     color: var(--primary);
 }
-
-.nav-buttons {
+.landing-page .nav-buttons {
     display: flex;
     gap: 12px;
 }
-
-.menu-toggle {
+.landing-page .menu-toggle {
     display: none;
     background: none;
     border: none;
     cursor: pointer;
 }
-
-.menu-toggle span {
+.landing-page .menu-toggle span {
     display: block;
     width: 25px;
     height: 3px;
@@ -77,16 +71,15 @@
     transition: 0.3s;
 }
 
-/* Hero Section */
-.hero {
+/* ---- Hero ---- */
+.landing-page .hero {
     padding: 140px 0 80px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     position: relative;
     overflow: hidden;
 }
-
-.hero::before {
+.landing-page .hero::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -96,8 +89,7 @@
     background: rgba(255,255,255,0.1);
     border-radius: 50%;
 }
-
-.hero .container {
+.landing-page .hero .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px;
@@ -105,68 +97,56 @@
     position: relative;
     z-index: 1;
 }
-
-.hero-title {
+.landing-page .hero-title {
     font-size: 52px;
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 24px;
 }
-
-.hero-title span {
+.landing-page .hero-title span {
     background: linear-gradient(120deg, #ffd89b, #19547b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-
-.hero-subtitle {
+.landing-page .hero-subtitle {
     font-size: 18px;
     opacity: 0.95;
     margin-bottom: 32px;
     line-height: 1.6;
 }
-
-.hero-stats {
+.landing-page .hero-stats {
     display: flex;
     gap: 32px;
     margin-bottom: 32px;
 }
-
-.stat-number {
+.landing-page .stat-number {
     font-size: 28px;
     font-weight: 700;
 }
-
-.stat-label {
+.landing-page .stat-label {
     font-size: 14px;
     opacity: 0.8;
 }
-
-.hero-buttons {
+.landing-page .hero-buttons {
     display: flex;
     gap: 16px;
 }
-
-.hero-buttons .btn-primary {
+.landing-page .hero-buttons .btn-primary {
     background: white;
     color: var(--primary);
 }
-
-.hero-buttons .btn-primary:hover {
+.landing-page .hero-buttons .btn-primary:hover {
     background: rgba(255,255,255,0.9);
 }
-
-.hero-buttons .btn-outline {
+.landing-page .hero-buttons .btn-outline {
     border-color: white;
     color: white;
 }
-
-.hero-buttons .btn-outline:hover {
+.landing-page .hero-buttons .btn-outline:hover {
     background: rgba(255,255,255,0.1);
 }
-
-.mock-phone {
+.landing-page .mock-phone {
     width: 280px;
     height: 560px;
     background: white;
@@ -175,8 +155,7 @@
     box-shadow: 0 30px 60px rgba(0,0,0,0.3);
     margin: 0 auto;
 }
-
-.mock-phone-content {
+.landing-page .mock-phone-content {
     background: linear-gradient(135deg, #667eea, #764ba2);
     border-radius: 30px;
     height: 100%;
@@ -189,41 +168,35 @@
     font-size: 24px;
     font-weight: bold;
 }
-
-.mock-phone-content i {
+.landing-page .mock-phone-content i {
     font-size: 48px;
 }
 
-/* Features */
-.features {
+/* ---- Features ---- */
+.landing-page .features {
     padding: 80px 0;
     background: var(--white);
 }
-
-.section-header {
+.landing-page .section-header {
     text-align: center;
     margin-bottom: 48px;
 }
-
-.section-header h2 {
+.landing-page .section-header h2 {
     font-size: 36px;
     margin-bottom: 16px;
 }
-
-.section-header p {
+.landing-page .section-header p {
     font-size: 18px;
     color: var(--text-gray);
     max-width: 600px;
     margin: 0 auto;
 }
-
-.features-grid {
+.landing-page .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
-
-.feature-card {
+.landing-page .feature-card {
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -231,14 +204,12 @@
     text-align: center;
     transition: all 0.3s;
 }
-
-.feature-card:hover {
+.landing-page .feature-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
     border-color: var(--primary-light);
 }
-
-.feature-icon {
+.landing-page .feature-icon {
     width: 60px;
     height: 60px;
     background: linear-gradient(135deg, var(--primary-light), var(--primary));
@@ -250,29 +221,25 @@
     font-size: 24px;
     color: white;
 }
-
-.feature-card h3 {
+.landing-page .feature-card h3 {
     margin-bottom: 12px;
 }
-
-.feature-card p {
+.landing-page .feature-card p {
     color: var(--text-gray);
     font-size: 14px;
 }
 
-/* Pricing */
-.pricing {
+/* ---- Pricing ---- */
+.landing-page .pricing {
     padding: 80px 0;
     background: var(--bg-main);
 }
-
-.pricing-grid {
+.landing-page .pricing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
-
-.pricing-card {
+.landing-page .pricing-card {
     background: var(--white);
     border: 2px solid var(--border);
     border-radius: var(--radius-xl);
@@ -280,14 +247,12 @@
     transition: all 0.3s;
     position: relative;
 }
-
-.pricing-card.featured {
+.landing-page .pricing-card.featured {
     border-color: var(--primary);
     transform: scale(1.05);
     box-shadow: var(--shadow-xl);
 }
-
-.pricing-badge {
+.landing-page .pricing-badge {
     position: absolute;
     top: -12px;
     left: 50%;
@@ -299,101 +264,85 @@
     font-size: 12px;
     font-weight: 600;
 }
-
-.pricing-card h3 {
+.landing-page .pricing-card h3 {
     font-size: 24px;
     margin-bottom: 16px;
 }
-
-.price {
+.landing-page .price {
     font-size: 36px;
     font-weight: 800;
     color: var(--primary);
     margin-bottom: 24px;
 }
-
-.price span {
+.landing-page .price span {
     font-size: 16px;
     font-weight: normal;
     color: var(--text-gray);
 }
-
-.pricing-features {
+.landing-page .pricing-features {
     list-style: none;
     margin: 24px 0;
 }
-
-.pricing-features li {
+.landing-page .pricing-features li {
     padding: 8px 0;
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 14px;
 }
-
-.pricing-features i {
+.landing-page .pricing-features i {
     width: 20px;
     color: var(--success);
 }
-
-.pricing-features .disabled {
+.landing-page .pricing-features .disabled {
     opacity: 0.5;
 }
-
-.pricing-features .disabled i {
+.landing-page .pricing-features .disabled i {
     color: var(--text-light);
 }
-
-.pricing-card .btn {
+.landing-page .pricing-card .btn {
     width: 100%;
 }
 
-/* Testimonials */
-.testimonials {
+/* ---- Testimonials ---- */
+.landing-page .testimonials {
     padding: 80px 0;
     background: var(--white);
 }
-
-.testimonials-grid {
+.landing-page .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
-
-.testimonial-card {
+.landing-page .testimonial-card {
     background: var(--bg-main);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 32px;
     transition: all 0.3s;
 }
-
-.testimonial-card:hover {
+.landing-page .testimonial-card:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-md);
 }
-
-.rating {
+.landing-page .rating {
     color: var(--secondary);
     margin-bottom: 16px;
 }
-
-.testimonial-text {
+.landing-page .testimonial-text {
     font-style: italic;
     margin-bottom: 20px;
     color: var(--text-gray);
     line-height: 1.6;
 }
-
-.testimonial-author {
+.landing-page .testimonial-author {
     display: flex;
     align-items: center;
     gap: 12px;
     padding-top: 16px;
     border-top: 1px solid var(--border);
 }
-
-.author-avatar {
+.landing-page .author-avatar {
     width: 48px;
     height: 48px;
     background: linear-gradient(135deg, var(--primary-light), var(--primary));
@@ -403,80 +352,69 @@
     justify-content: center;
     color: white;
 }
-
-.author-name {
+.landing-page .author-name {
     font-weight: 600;
     margin-bottom: 4px;
 }
-
-.author-title {
+.landing-page .author-title {
     font-size: 12px;
     color: var(--text-gray);
 }
 
-/* CTA Section */
-.cta {
+/* ---- CTA ---- */
+.landing-page .cta {
     padding: 80px 0;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
     text-align: center;
 }
-
-.cta h2 {
+.landing-page .cta h2 {
     font-size: 36px;
     margin-bottom: 20px;
 }
-
-.cta p {
+.landing-page .cta p {
     margin-bottom: 30px;
     opacity: 0.9;
     font-size: 18px;
 }
-
-.cta .btn-primary {
+.landing-page .cta .btn-primary {
     background: white;
     color: var(--primary);
     font-size: 16px;
     padding: 14px 32px;
 }
-
-.cta .btn-primary:hover {
+.landing-page .cta .btn-primary:hover {
     background: rgba(255,255,255,0.9);
     transform: translateY(-2px);
 }
 
-/* Footer */
-.footer {
+/* ---- Footer ---- */
+.landing-page .footer {
     background: var(--bg-dark);
     color: white;
     padding: 60px 0 30px;
 }
-
-.footer-grid {
+.landing-page .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 40px;
     margin-bottom: 40px;
 }
-
-.footer-col .logo {
+.landing-page .footer-col .logo {
     color: white;
     margin-bottom: 16px;
 }
-
-.footer-col p {
+.landing-page .footer-col p {
     color: rgba(255,255,255,0.7);
     font-size: 14px;
     line-height: 1.6;
     margin-bottom: 20px;
 }
-
-.social-links {
+.landing-page .social-links {
     display: flex;
     gap: 12px;
 }
-
-.social-links a {
+.landing-page .social-links a {
     width: 36px;
     height: 36px;
     background: rgba(255,255,255,0.1);
@@ -486,36 +424,29 @@
     justify-content: center;
     transition: all 0.2s;
 }
-
-.social-links a:hover {
+.landing-page .social-links a:hover {
     background: var(--primary);
     transform: translateY(-3px);
 }
-
-.footer-col h4 {
+.landing-page .footer-col h4 {
     margin-bottom: 20px;
     font-size: 16px;
 }
-
-.footer-col ul {
+.landing-page .footer-col ul {
     list-style: none;
 }
-
-.footer-col ul li {
+.landing-page .footer-col ul li {
     margin-bottom: 12px;
 }
-
-.footer-col ul li a {
+.landing-page .footer-col ul li a {
     color: rgba(255,255,255,0.7);
     font-size: 14px;
     transition: color 0.2s;
 }
-
-.footer-col ul li a:hover {
+.landing-page .footer-col ul li a:hover {
     color: white;
 }
-
-.footer-bottom {
+.landing-page .footer-bottom {
     text-align: center;
     padding-top: 30px;
     border-top: 1px solid rgba(255,255,255,0.1);
@@ -523,36 +454,31 @@
     font-size: 14px;
 }
 
-/* Responsive */
+/* ---- Responsive ---- */
 @media (max-width: 1024px) {
-    .hero-title {
+    .landing-page .hero-title {
         font-size: 42px;
     }
-    
-    .hero .container {
+    .landing-page .hero .container {
         grid-template-columns: 1fr;
         text-align: center;
     }
-    
-    .hero-stats {
+    .landing-page .hero-stats {
         justify-content: center;
     }
-    
-    .hero-buttons {
+    .landing-page .hero-buttons {
         justify-content: center;
     }
-    
-    .hero-image {
+    .landing-page .hero-image {
         order: -1;
     }
-    
-    .pricing-card.featured {
+    .landing-page .pricing-card.featured {
         transform: scale(1);
     }
 }
 
 @media (max-width: 768px) {
-    .nav-menu {
+    .landing-page .nav-menu {
         display: none;
         position: fixed;
         top: 70px;
@@ -564,21 +490,17 @@
         box-shadow: var(--shadow-md);
         gap: 0;
     }
-    
-    .nav-menu.active {
+    .landing-page .nav-menu.active {
         display: flex;
     }
-    
-    .nav-menu a {
+    .landing-page .nav-menu a {
         padding: 12px 0;
         border-bottom: 1px solid var(--border);
     }
-    
-    .nav-buttons {
+    .landing-page .nav-buttons {
         display: none;
     }
-    
-    .nav-buttons.active {
+    .landing-page .nav-buttons.active {
         display: flex;
         flex-direction: column;
         position: fixed;
@@ -589,44 +511,35 @@
         padding: 20px;
         box-shadow: var(--shadow-md);
     }
-    
-    .menu-toggle {
+    .landing-page .menu-toggle {
         display: block;
     }
-    
-    .hero-title {
+    .landing-page .hero-title {
         font-size: 32px;
     }
-    
-    .hero-subtitle {
+    .landing-page .hero-subtitle {
         font-size: 16px;
     }
-    
-    .hero-stats {
+    .landing-page .hero-stats {
         flex-wrap: wrap;
         justify-content: center;
     }
-    
-    .section-header h2 {
+    .landing-page .section-header h2 {
         font-size: 28px;
     }
-    
-    .section-header p {
+    .landing-page .section-header p {
         font-size: 16px;
     }
-    
-    .features-grid,
-    .pricing-grid,
-    .testimonials-grid {
+    .landing-page .features-grid,
+    .landing-page .pricing-grid,
+    .landing-page .testimonials-grid {
         grid-template-columns: 1fr;
     }
-    
-    .footer-grid {
+    .landing-page .footer-grid {
         grid-template-columns: 1fr;
         text-align: center;
     }
-    
-    .social-links {
+    .landing-page .social-links {
         justify-content: center;
     }
 }
